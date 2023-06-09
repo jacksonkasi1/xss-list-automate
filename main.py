@@ -27,12 +27,7 @@ while True:
         url = urls[0]
 
         # Check if URL encoding is required
-        if url_encode:
-            # Encode the URL
-            encoded_url = urllib.parse.quote(url, safe='')
-        else:
-            encoded_url = url
-
+        encoded_url = urllib.parse.quote(url, safe='') if url_encode else url
         # Construct the full URL
         full_url = url_prefix + encoded_url
 
@@ -46,7 +41,7 @@ while True:
 
         # Open the URL in a new tab in the browser
         # browser.execute_script("window.open('{}', '_blank');".format(full_url))
-    
+
         js_code = f"window.open({json.dumps(full_url)}, '_blank');"
         browser.execute_script(js_code)
 
@@ -68,7 +63,7 @@ while True:
             encoded_second_url = second_url
 
         full_second_url = url_prefix + encoded_second_url
-        browser.execute_script("window.open('{}', '_blank');".format(full_second_url))
+        browser.execute_script(f"window.open('{full_second_url}', '_blank');")
 
         # Wait for the second page to fully load
         time.sleep(5)
